@@ -1,4 +1,17 @@
 <h1>${title}</h1>
-<ul>
-    ${data.map(executive => `<li>${executive.full_name}</li>`).join('')}
-</ul>
+<form action="/" method="post" id='rankingForm'>
+    ${data.map(rankingthing => {
+        return `<div>${rankingthing.language} - I am 
+            <select value="${rankingthing.language}" name="${rankingthing.language}">
+                <option value="" selected disabled hidden>${rankingthing.ranking}</option>"
+                ${rankingData.map(ranking => {
+                    return `<option value="${ranking.id}">${ranking.ranking}</option>`
+                }
+                ).join('')}
+            </select>
+             at ${rankingthing.language}
+            </div>`
+        })
+    .join('')}
+    <input type="submit" value = "submit">
+</form>

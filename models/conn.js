@@ -1,6 +1,6 @@
-const { use } = require('../routes');
 
-const host = "lallah.db.elephantsql.com ",
+
+const host = "lallah.db.elephantsql.com",
     user = "ihlotdct",
     database = "ihlotdct",
     password= "fU5g-UvFY1c9YoNaT6lk9P4SMxFZEI9L";

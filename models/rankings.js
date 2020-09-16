@@ -8,7 +8,7 @@ class LanguageRanking {
     }
     static async getAll(){
         try {
-            const response = await db.any('SELECT langauges.language, rankings.ranking, rankings.ranking_value FROM langauges INNER JOIN rankings ON langauges.ranking = rankings.id');
+            const response = await db.any('SELECT langauges.language, rankings.ranking, rankings.ranking_value FROM langauges INNER JOIN rankings ON langauges.ranking = rankings.id ORDER BY language ASC;');
             return response
         }
         catch (error) {
