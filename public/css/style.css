@@ -19,7 +19,11 @@ form {
 }
 
 div select:hover{
-    transform: scale(1.05)
+    transform: scale(1.05);
+    background-image: linear-gradient(var(--accentFg), var(--accentFg)),
+      linear-gradient(-135deg, transparent 50%, var(--accentFg) 50%),
+      linear-gradient(-225deg, transparent 50%, var(--accentFg) 50%),
+      linear-gradient(var(--accentFg) 42%, var(--accentBg) 42%);
 }
 
 div select{
@@ -27,7 +31,11 @@ div select{
 }
 
 form input{
+    
+    max-width: 50%;
+    margin: auto;
     margin-top: 10px;
+    text-transform: uppercase;
 }
 
 :root {

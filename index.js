@@ -14,6 +14,7 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
+
 const server = http.createServer(app)
 server.listen(port, hostname, ()=>{
     console.log(`I'm listenting here ${hostname}:${port}`)
@@ -22,3 +23,4 @@ server.listen(port, hostname, ()=>{
 const rootController = require('./routes/index')
 
 app.use('/', rootController)
+

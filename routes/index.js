@@ -5,27 +5,23 @@ const rankingsModel = require('../models/rankings'),
     rankings = require('../models/rankingsCall');
 const db = require('../models/conn');
 ( function () {
-router.get('/', async (req, res) => {
-    const languageRanking = await rankingsModel.getAll();
-    const rankingList = await rankings.getRanking();
-    console.log(languageRanking)
-    console.log(rankingList)
-    res.render('template', {
-        locals:{
-            title: 'Language Ranker',
-            data: languageRanking,
-            rankingData: rankingList
-        },
-        partials: {
-            partial: 'partial'
-        }
+    router.get('/', async (req, res) => {
+        const languageRanking = await rankingsModel.getAll();
+        const rankingList = await rankings.getRanking();
+        console.log(languageRanking)
+        console.log(rankingList)
+        res.render('template', {
+            locals:{
+                title: 'Language Ranker',
+                data: languageRanking,
+                rankingData: rankingList
+            },
+            partials: {
+                partial: 'partial'
+            }
+        });
     });
-});
 })();
-//const bodyParser = require('body-parser')
-
-//router.use(bodyParser.urlencoded({extended:false}))
-//router.use(bodyParser.json())
 
 router.get('/template', (req, res)=>{
     res.sendFile("./template.html");
@@ -35,17 +31,25 @@ const update = require('../models/postModel')
 
 router.post('/', async (req, res) =>{
     const sendData = async (data)=>{
-        try {
-            for (let ranking in data) {
-                await db.result(`UPDATE langauges SET ranking  = ${data[ranking]} WHERE language = '${ranking}'; `)
+        if (data.reset === 'reset'){
+            const languageRanking = await rankingsModel.getAll();
+            for (let theLanguage of languageRanking){
+                await db.result(`UPDATE langauges SET ranking = 6 WHERE language = $1`, [theLanguage.language])
+            }
+        } 
+        else {
+            try {
+                for (let ranking in data) {
+                    ranking !== 'reset' ? await db.result(`UPDATE langauges SET ranking  = $1 WHERE language = $2;`, [Number(data[ranking]),ranking]) : 0
+                }
+            }
+            catch (error) {
+                return error.message;
             }
         }
-        catch (error) {
-            return error.message;
-        }
     }
-    const ranned = await sendData(req.body)
-    ranned;
+    const sendBody = await sendData(req.body)
+    sendBody;
     const redirected = await res.redirect('/')
     redirected;
 })
